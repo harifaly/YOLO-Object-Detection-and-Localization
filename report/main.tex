@@ -157,13 +157,13 @@ R-CNN a ouvert la voie à des modèles comme Fast R-CNN, Faster R-CNN qui ont en
 \hline
 \textbf{Caractéristiques} & \textbf{Description} \\
 \hline
-Nom & YOLO (You Look Only Once). \\
+Nom & YOLO (You Only Look Once). \\
 \hline
-Créateurs & Joseph Redmon et Ali Farhadi (2015). \\
+Créateurs & Joseph Redmon , Santosh Divvala, Ross Girshick et Ali Farhadi (2015). \\
 \hline
 Type & Algorithme de détection d'objets en temps réel basé sur des réseaux de neurones convolutifs (CNN). \\
 \hline
-Versions & De YOLOv1 à YOLOv9. \\
+Versions & De YOLOv1 à YOLO26. \\
 \hline
 Applications & Utilisé dans les véhicules autonomes, la vidéosurveillance et la robotique \dots \\
 \hline
@@ -185,7 +185,7 @@ Le principe de base de YOLO est de diviser l’image en plus petites parties à 
     \label{fig:mon-etiquette}
 \end{figure}
 La cellule contenant le centre d’un objet (par exemple un chien ou un vélo) est responsable de sa détection (pour le calcul du loss). Chaque cellule de la grille prédit $B$ bounding boxes(paramétrable) et un score de confiance pour chacune.\\[0.1cm]
-La "bounding box" prédite contient les 5 valeurs $x,y,h,w,\text{et confiance}$ où $(x,y)$ est la position du centre dans la grille, $(w,h)$ la largeur et la hauteur sont prédites par rapport à l’image entière, et enfin la prédiction de confiance représente l'IoU entre la boîte prédite(predicted box) et toute boîte de vérité terrain(any ground truth box). 
+La "bounding box" (boîte englobante) prédite contient les 5 valeurs $x,y,h,w,\text{et confiance}$ où $(x,y)$ est la position du centre dans la grille, $(w,h)$ la largeur et la hauteur sont prédites par rapport à l’image entière, et enfin la prédiction de confiance représente l'IoU entre la boîte prédite(predicted box) et toute boîte de vérité terrain(any ground truth box). 
 \\[0.1cm]
 Pour calculer la précision de notre bounding box lors de l’entraînement (composante du loss), on utilise l’intersection over union, définie comme:
 $$\frac{pred_{box} \cap label_{box}}{pred_{box} \cup label_{box}}$$
@@ -195,7 +195,7 @@ $$\frac{pred_{box} \cap label_{box}}{pred_{box} \cup label_{box}}$$
     \caption{Séparation en grille}
     \label{fig:mon-etiquette}
 \end{figure}
-En plus de prédire la bounding box et la confiance, chaque cellule prédit aussi la classe de l’objet. Cette classe est représentée par un vecteur $\text{one\_hot}$ (qui contient uniquement des 0 sauf un 1 dans la bonne classe) dans les annotations.\\[0.1cm]
+En plus de prédire la "bounding box"(boîte englobante) et la confiance, chaque cellule prédit aussi la classe de l’objet. Cette classe est représentée par un vecteur $\text{one\_hot}$ (qui contient uniquement des 0 sauf un 1 dans la bonne classe) dans les annotations.\\[0.1cm]
 Il est important de noter que chaque cellule peut prédire plusieurs bounding boxes mais une seule classe.\\[0.1cm]
 Chaque cellule de la grille prédit également probabilités de classe conditionnelles, $Pr(Classe_i | Objet)$. Ces probabilités sont conditionnées par le fait que la cellule de la grille contienne un objet.Nous ne prédisons qu’un seul ensemble de probabilités de classe par cellule de la grille, quel que soit le nombre de boîtes B.\\[0.1cm]
 
@@ -209,7 +209,7 @@ $$S \times S \times (C+B \times 5)$$
     \caption{Résultat final}
     \label{fig:mon-etiquette}
 \end{figure}
-La figure du centre en haut montre les bounding boxes prédites par le modèle (celles avec un trait plus épais ont des scores de confiance élevés).La figure du centre en bas montre la classe prédite dans chaque cellule (en bleu la classe chien, en jaune la classe vélo et en rose la classe voiture).\\[0.2cm]
+La figure du centre en haut montre les "bounding boxes"(boîtes englobantes) prédites par le modèle (celles avec un trait plus épais ont des scores de confiance élevés).La figure du centre en bas montre la classe prédite dans chaque cellule (en bleu la classe chien, en jaune la classe vélo et en rose la classe voiture).\\[0.2cm]
 Exemple : Pour évaluer YOLO sur Pascal VOC, on utilise $S=7$, $B=2$. Pascal VOC a 20 classes labelées donc $C=20$. Notre final prédiction est un $7 \times 7 \times 30$ tenseur.
 \subsection{Architecture du modèle}
 Elle comprend trois composants principaux : head, neck et backbone.
@@ -249,11 +249,8 @@ Le fonctionnement de YOLO repose sur plusieurs étapes clés:
         des détections correctes.
   \item \textbf{Rappel} : $\mathrm{TP}/(\mathrm{TP}+\mathrm{FN})$, part des
         objets réels retrouvés.
-  \item \textbf{AP et mAP} : l'AP est l'aire sous la courbe
-        précision-rappel d'une classe ; le mAP est la moyenne de l'AP sur les
-        classes.
-  \item \textbf{Vitesse} : temps d'inférence moyen par image, avec le
-        matériel, la taille de lot et la résolution précisés.
+  \item \textbf{AP (Average Precision)}: score mesurant la performance pour une classe
+  \item \textbf{mAP (Mean Average Precision)} est la moyenne de toutes les l'AP (moyenne de toutes les classes)
 \end{itemize}
 
 \section{Amelioration de YOLO}
@@ -395,7 +392,7 @@ présentées.
 
 \subsection{Indicateurs d'évaluation}
 Les indicateurs de précision, de rappel, d'AP, de mAP@50 et de mAP@50-95
-sont ceux définis dans la section~\ref{sec:metriques}.
+sont ceux définis dans la section 6.
 
 Un \textbf{rappel par taille d'objet} a de plus été calculé avec une
 procédure personnalisée, pour E0 et E1. Les annotations sont classées selon
@@ -719,5 +716,17 @@ T.-Y. Lin, M.~Maire, S.~Belongie, J.~Hays, P.~Perona, D.~Ramanan, P.~Doll{\'a}r 
 \newblock Microsoft COCO: Common Objects in Context.
 \newblock In \emph{European Conference on Computer Vision (ECCV)}, 2014, pp.~740--755.
 
+\bibitem{octo2021yolo}
+Touraya El Hassani.
+\newblock You Only Look Once : un réseau de neurones pour la détection d'objets.
+\newblock OCTO Talks!, 26 août 2021.
+\newblock \url{https://blog.octo.com/you-only-look-once-un-reseau-de-neurones-pour-la-detection-dobjets}
+
+\bibitem{coursYolo}
+Simon Thomine.
+\newblock \textit{YOLO en détail}.
+\newblock Cours de Deep Learning, GitHub.
+\newblock 
+\url{https://github.com/SimonThomine/CoursDeepLearning/blob/main/fr/08_DetectionEtYolo/02_YoloEnDetail.ipynb}
 \end{thebibliography}
 \end{document}
