@@ -1,0 +1,18 @@
+# Configuration des données utilisée pour E0, E1 et E2 (chemins Google Colab).
+# - train : sous-ensemble de 2000 images (visdrone_sub.zip, décompressé dans /content)
+# - val   : 548 images de VisDrone2019-DET, téléchargées par check_det_dataset("VisDrone.yaml")
+path: /content/datasets/VisDrone
+train: /content/visdrone_sub/images
+val: images/val
+test: images/test
+names:
+  0: pedestrian
+  1: people
+  2: bicycle
+  3: car
+  4: van
+  5: truck
+  6: tricycle
+  7: awning-tricycle
+  8: bus
+  9: motor

@@ -1,0 +1,45 @@
+# Données et sorties lourdes
+datasets/
+visdrone_sub/
+visdrone_sub.zip
+runs/
+*.zip
+*.cache
+
+# Poids (à publier via les Releases GitHub si besoin)
+*.pt
+
+# Python / Jupyter
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+.DS_Store
+
+
+# Python
+__pycache__/
+*.py[cod]
+*.log
+.venv/
+venv/
+env/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# YOLOv8 - poids des modèles
+*.pt
+
+# Dataset
+datasets/
+VisDrone/
+*.zip
+
+# Environnements et fichiers temporaires
+.DS_Store
+Thumbs.db
+*.tmp
+*.cache/
+
+# Google Colab
+.config/

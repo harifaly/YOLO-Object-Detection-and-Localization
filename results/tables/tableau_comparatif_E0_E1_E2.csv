@@ -1,0 +1,4 @@
+Expérience,Modèle,Résolution,Paramètres (M),Précision,Rappel,mAP50,mAP50-95,Entraînement (min),Inférence GPU T4 (ms/img)
+E0,YOLOv8n,640,3.13,0.367,0.285,0.245,0.134,24.0,3.5
+E1,YOLOv8n,960,3.13,0.458,0.363,0.345,0.199,38.8,5.4
+E2,YOLOv8s,640,11.13,0.449,0.337,0.318,0.179,26.8,4.8
