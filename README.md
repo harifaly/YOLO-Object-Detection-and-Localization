@@ -381,7 +381,7 @@ Les résultats obtenus lors d'une nouvelle exécution peuvent donc présenter de
 - Étudiant 1 : ANDRIAMIRINDRAMANANA Harifaly Lunard
 - Étudiant 2 : RAKOTOARIMANANA Joy Sandra Hasina
 
-**Année universitaire : 2026**
+**Année universitaire :2025-2026**
 
 **Parcours MAFI & Calcul Numérique**
 
