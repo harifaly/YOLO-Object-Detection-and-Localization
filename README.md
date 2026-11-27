@@ -9,6 +9,7 @@
 ## 1. Présentation du projet
 
 Ce projet porte sur la détection automatique d'objets dans des images aériennes à l'aide des réseaux de neurones convolutifs et, plus particulièrement, de la famille de modèles YOLOv8.
+Cette architecture est beaucoup plus rapide et permet d'atteindre des vitesses de traitement allant jusqu'à 45 images par seconde
 
 L'étude utilise le dataset **VisDrone2019-DET**, qui contient des images acquises par des drones et présente plusieurs difficultés, notamment la petite taille des objets, leur densité et les variations des conditions de prise de vue.
 
